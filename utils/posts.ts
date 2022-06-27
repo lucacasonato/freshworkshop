@@ -29,3 +29,14 @@ export async function loadPost(id: string): Promise<Post | null> {
     content: body,
   };
 }
+
+export async function listPosts(): Promise<Post[]> {
+  const promises = [];
+  for await (const entry of Deno.readDir("./data/posts")) {
+    const id = entry.name.replace(".md", "");
+    promises.push(loadPost(id));
+  }
+  const posts = await Promise.all(promises) as Post[];
+  posts.sort((a, b) => b.publishAt.getTime() - a.publishAt.getTime());
+  return posts;
+}
