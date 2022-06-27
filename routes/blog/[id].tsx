@@ -1,17 +1,21 @@
 /** @jsx h */
 import { h } from "preact";
+import { Handlers, PageProps } from "$fresh/server.ts";
 import { tw } from "@twind";
-import { Post } from "../../utils/posts.ts";
+import { loadPost, Post } from "../../utils/posts.ts";
 
-const post: Post = {
-  id: "hello",
-  title: "Hello World",
-  publishAt: new Date("2020-01-01"),
-  snippet: "The first post.",
-  content: "Hello World",
+export const handler: Handlers<Post> = {
+  async GET(_req, ctx) {
+    const post = await loadPost(ctx.params.id);
+    if (!post) {
+      return new Response("Post not found", { status: 404 });
+    }
+    return ctx.render(post);
+  },
 };
 
-export default function PostPage() {
+export default function PostPage(props: PageProps<Post>) {
+  const post = props.data;
   return (
     <div class={tw`px-4 mx-auto max-w-screen-md`}>
       <p class={tw`text-gray-600 mt-12`}>
