@@ -4,6 +4,7 @@
 
     "$fresh/": "https://deno.land/x/fresh@1.0.0-rc.6/",
     "$std/": "https://deno.land/std@0.145.0/",
+    "$gfm": "https://deno.land/x/gfm@0.1.22/mod.ts",
 
     "preact": "https://esm.sh/preact@10.8.1",
     "preact/": "https://esm.sh/preact@10.8.1/",

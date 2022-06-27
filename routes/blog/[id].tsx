@@ -1,6 +1,7 @@
 /** @jsx h */
 import { h } from "preact";
 import { Handlers, PageProps } from "$fresh/server.ts";
+import * as gfm from "$gfm";
 import { tw } from "@twind";
 import { loadPost, Post } from "../../utils/posts.ts";
 
@@ -16,13 +17,18 @@ export const handler: Handlers<Post> = {
 
 export default function PostPage(props: PageProps<Post>) {
   const post = props.data;
+  const html = gfm.render(post.content);
   return (
     <div class={tw`px-4 mx-auto max-w-screen-md`}>
       <p class={tw`text-gray-600 mt-12`}>
         {post.publishAt.toLocaleDateString()}
       </p>
       <h1 class={tw`font-bold text-5xl mt-2`}>{post.title}</h1>
-      <div class={tw`mt-12`}>{post.content}</div>
+      <style dangerouslySetInnerHTML={{ __html: gfm.CSS }} />
+      <div
+        class={tw`mt-12` + " markdown-body"}
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     </div>
   );
 }
