@@ -9,16 +9,22 @@ interface LanguageSelectorProps {
 }
 
 const localeFmt = new Intl.DisplayNames(["en"], { type: "language" });
+const date = new Date();
 
 export default function LanguageSelector(props: LanguageSelectorProps) {
   const [localeCode, setLocaleCode] = useState(props.preferredLocale ?? "");
 
-  const locale = useMemo(
+  const [locale, dateFmt] = useMemo(
     () => {
       try {
-        return new Intl.Locale(localeCode || props.fallbackLocale);
+        const locale = new Intl.Locale(localeCode || props.fallbackLocale);
+        const dateFmt = new Intl.DateTimeFormat(locale.language, {
+          dateStyle: "long",
+          timeStyle: "medium",
+        });
+        return [locale, dateFmt];
       } catch {
-        return null;
+        return [null, null];
       }
     },
     [localeCode],
@@ -39,11 +45,13 @@ export default function LanguageSelector(props: LanguageSelectorProps) {
         value={localeCode}
         onInput={(e) => setLocaleCode(e.currentTarget.value)}
       />
-      {locale &&
+      {locale && dateFmt &&
         (
           <dl>
-            <dt class={tw`text-gray-600 mt-2`}>Language</dt>
+            <dt class={tw`text-gray-600 mt-2 font-bold`}>Language</dt>
             <dd class={tw`text-gray-600`}>{localeFmt.of(locale.language)}</dd>
+            <dt class={tw`text-gray-600 mt-2 font-bold`}>Time sample</dt>
+            <dd class={tw`text-gray-600`}>{dateFmt.format(date)}</dd>
           </dl>
         )}
       <button

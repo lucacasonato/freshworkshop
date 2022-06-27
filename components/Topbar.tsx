@@ -9,6 +9,9 @@ export default function Topbar() {
         Luca's Blog
       </a>
       <div class={tw`text-gray-700`}>© {new Date().getFullYear()}</div>
+      <a href="/settings" class={tw`block text-gray-700 hover:underline`}>
+        Settings
+      </a>
     </div>
   );
 }
