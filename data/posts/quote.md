@@ -1,6 +1,6 @@
 ---
 title: "Quote example"
-publish_at: 2022-06-26T13:49:37.703Z
+publish_at: 2023-01-26T13:49:37.703Z
 snippet: This is an excerpt of my first blog post.
 ---
 
