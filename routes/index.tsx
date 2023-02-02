@@ -20,7 +20,7 @@ export default function Home(props: PageProps<Data>) {
   const { posts, locales } = props.data;
   return (
     <div class={tw`px-4 mx-auto max-w-screen-md`}>
-      <h1 class={tw`font-bold text-5xl mt-12`}>Luca's Blog</h1>
+      <h1 class={tw`font-bold text-5xl mt-12`}>Kemal's Blog</h1>
       <ul class={tw`mt-8`}>
         {posts.map((post) => <PostEntry post={post} locales={locales} />)}
       </ul>
